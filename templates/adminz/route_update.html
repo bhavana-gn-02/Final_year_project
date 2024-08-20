@@ -1,0 +1,47 @@
+{% load static %}
+{% include 'adminz/header.html'%}
+{% include 'adminz/slidebar.html'%}
+<div w3-include-html="header.html"></div>
+<div w3-include-html="slidebar.html"></div>
+<div class="conatiner-fluid content-inner mt-n5 py-0">
+    <div>
+       <div class="row">  
+          <div class="col-xl-9 col-lg-8">
+             <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                   <div class="header-title">
+                      <h4 class="card-title">Route Information</h4>
+                   </div>
+                </div>
+                <div class="card-body">
+                   <div class="new-user-info">
+                     {% include 'adminz/val.html' %}
+                     <form name="formID" id="formID" action="/adminhome/routes_edit/{{routs.id}}" method="POST">
+                        {% csrf_token %}
+                         <div class="row">
+                            <div class="form-group col-md-6">
+                               <label class="form-label" for="fname">From route:</label>
+                               <input type="text"  class="validate[required] form-control" id="f_route" name="f_route" value="{{routs.froute}}" placeholder="From route">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="fname">To route:</label>
+                                <input type="text"  class="validate[required] form-control" id="t_route" name="t_route" value="{{routs.troute}}" placeholder="To route">
+                             </div>
+                            
+                         </div>
+                         <br>
+                         <center>
+                           <input type="submit" name="submit" value="Update" class="btn btn-success">
+                         
+                           </center>
+                      </form>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+    </div>
+    {% include 'adminz/footer.html'%}
+    {% include 'adminz/val.html' %}
+    

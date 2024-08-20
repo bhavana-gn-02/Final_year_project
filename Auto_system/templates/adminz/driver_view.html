@@ -1,0 +1,137 @@
+{% load static %}
+{% include 'adminz/header.html'%}
+{% include 'adminz/slidebar.html'%}
+<script>
+   {% if messages %}
+   {% for message in messages %}
+     alert('{{message}}')
+    {% endfor %}
+   {% endif %}
+   </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<div class="conatiner-fluid content-inner mt-n5 py-0">
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="card">
+            <div class="card-header d-flex justify-content-between">
+               <div class="header-title">
+                  <h4 class="card-title">Driver Details View</h4>
+               </div>
+               
+            </div>
+            <div class="card-body">
+               <div class="table-responsive">
+                  <table id="datatable" class="table table-striped" data-toggle="data-table">
+                     <thead>
+                        <tr class="ligth">
+                           <th>#SNO.</th>
+                           <th>Driver id</th>
+                           <th>Driver Name</th>
+                           <th>Email</th>
+                           <th>Password</th>
+                           <th>Contact No</th>
+                           <th>Auto Number</th>
+                           <th>Auto Type</th>
+                           <th>Auto Register Date</th>
+                           <th>Licence No</th>
+                           <th>Auto Photo</th>
+                           <th>Driver Photo</th>
+                           <th>Driver QR code</th>
+                           
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for d in drivers %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>{{d.id}}</td>
+                          <td>{{d.dname}}</td>
+                          <td>{{d.email}}</td>
+                          <td>{{d.passw}}</td>
+                          <td>{{d.contact}}</td>
+                          <td>{{d.auto_number}}</td>
+                          <td>{{d.auto_type}}</td>
+                          <td>{{d.auto_date}}</td>
+                          <td>{{d.license_no}}</td>
+                          <td>{%if d.auto_photo %}<img src="{{d.auto_photo.url}}" height="80" width="80"> </td>
+                          {%endif%}
+                          <td>{%if d.driver_photo %}<img src="{{d.driver_photo.url}}" height="80" width="80"></td>{%endif%}
+                          <td>{%if d.driver_qr %}<img src="{{d.driver_qr.url}}" height="80" width="80"></td>{%endif%}
+                         
+        
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                      <tfoot>
+                         <tr>
+                           <th>#SNO.</th>
+                           <th>Driver id</th>
+                           <th>Driver Name</th>
+                           <th>Email</th>
+                           <th>Password</th>
+                           <th>Contact No</th>
+                           <th>Auto Number</th>
+                           <th>Auto Type</th>
+                           <th>Auto Register Date</th>
+                           <th>Licence No</th>
+                           <th>Auto Photo</th>
+                           <th>Driver Photo</th>
+                           <th>Driver QR code</th> 
+                           
+                         </tr>
+                        </tfoot>
+                     </table>
+                  </div>
+               </div>
+         </div>
+      </div>
+   </div>
+               </div>
+            
+   
+       {% include 'adminz/footer.html'%}
+       <script type="text/javascript">
+         function confirmation(ev)
+         {
+            ev.preventDefault();
+            var urlToRedirect=ev.currentTarget.getAttribute('href');
+            console.log(urlToRedirect);
+            swal({
+               title:"Are you sure want to delete this?",
+               text:"You won't able to retrive this",
+               icon:"warning",
+               buttons:true,
+               dangerMode:true,
+            })
+            .then((willCancel)=>
+            {
+               if(willCancel)
+               {
+                  window.location.href=urlToRedirect
+               }
+            });
+            
+         }
+         function conform(ev)
+         {
+            ev.preventDefault();
+            var urlToRedirect=ev.currentTarget.getAttribute('href');
+            console.log(urlToRedirect);
+            swal({
+               title:"Are you sure want to Edit this?",
+               
+               icon:"warning",
+               buttons:true,
+               dangerMode:true,
+            })
+            .then((willCancel)=>
+            {
+               if(willCancel)
+               {
+                  window.location.href=urlToRedirect
+               }
+            });
+            
+         }
+         
+       </script>

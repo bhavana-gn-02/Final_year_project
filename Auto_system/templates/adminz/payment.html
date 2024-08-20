@@ -1,0 +1,80 @@
+{% load static %}
+{% include 'adminz/dheader.html'%}
+{% include 'adminz/slidebardriver.html'%}
+<div w3-include-html="header.html"></div>
+<div w3-include-html="slidebar.html"></div>
+<div class="conatiner-fluid content-inner mt-n5 py-0">
+    <div>
+       <div class="row">
+          
+          <div class="col-xl-9 col-lg-8">
+             <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                   <div class="header-title">
+                      <h4 class="card-title">Payment Details Form</h4>
+                   </div>
+                </div>
+                <div class="card-body">
+                   <div class="new-user-info">
+                     {% include 'adminz/val.html' %}
+                      <form name="formID" id="formID" action="/adminhome/payment_add/" method="POST">
+                        {% csrf_token %}
+                         <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="fname">Ride Booking Id:</label>
+                                <input type="text" class= "form-control" name="rid" id="rid" value="{{ridebooks.id}}" readonly="">
+                             </div>
+                             <div class="form-group col-md-6">
+                              <label class="form-label" for="fname">Driver :</label>
+                              <input type="hidden" class="form-control" name="driver_id" id="driver_id" value="{{ridebooks.did.id}}" readonly="">{{ridebooks.did}}
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label class="form-label" for="fname">Customer:</label>
+                              <input type="hidden" class=" form-control" name="customer_id" id="customer_id" value="{{ridebooks.cid.id}}" >{{ridebooks.cid}}
+                           </div>
+                           
+                            <div class="form-group col-md-6">
+                               <label class="form-label" for="fname">Transaction Type:</label>
+                               <select name="ttype" id="ttype" class="form-control">
+                                 <option value="cash">Cash</option>
+                                 <option value="online">Online</option>
+                               </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="fname">Transaction Amount:</label>
+                                <input type="text" class="form-control" name="tamount" id="tamount" value="{{ridebooks.total_amount}}.00" readonly="">
+                             </div>
+                            
+                            <div class="form-group col-md-6">
+                               <label class="form-label" for="mobno">Transaction Date:</label>
+                               <input type="date" class="validate[required,custom[date]] form-control" name="tdate" id="tdate">
+                            </div>
+                            <div class="form-group col-md-6">
+                              <label class="form-label" for="mobno">Transaction Status:</label>
+                              <select name="tstatus" id="tstatus" class="form-control">
+                                 <option value="unpaid" selected>Unpaid</option>
+                                 <option value="paid">Paid</option>
+                               </select>
+                           </div>
+
+                           <div class="form-group col-md-6">
+                              <label class="form-label btn btn-info" for="mobno">Qr Code:</label><p>
+                              <img src="{{ridebooks.driver_qr.url}}" height="250" width="200">
+                              
+                           </div>
+                         </div>
+                         <br>
+                         <center>
+                         <input type="submit" name="submit" value="Submit" class="btn btn-success">
+                        
+                         </center>
+                      </form>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+    </div>
+    {% include 'adminz/footer.html'%}
+    {% include 'adminz/val.html' %}

@@ -1,0 +1,215 @@
+
+{% include 'adminz/dheader.html'%}
+{% include 'adminz/slidebardriver.html'%}
+<script>
+   function sum(value)
+   {
+      var tkm,pkm;
+      tkm=23*value;
+      
+      document.getElementById('out2x').value=tkm;
+   }
+</script>
+<div w3-include-html="header.html"></div>
+<div w3-include-html="slidebar.html"></div>
+<div class="conatiner-fluid content-inner mt-n5 py-0">
+    <div>
+       <div class="row">
+          
+          <div class="col-xl-9 col-lg-8">
+             <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                   <div class="header-title">
+                      <h4 class="card-title">Ride Booking Information</h4>
+                   </div>
+                </div>
+                <div class="card-body">
+                   <div class="new-user-info">
+                     {% include 'adminz/val.html' %}
+                       <form name="formID" id="formID" action=/adminhome/ridebook_edit/{{ridebooks.id}} method="POST">
+                        {% csrf_token %}
+                         <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="cid">User name</label>
+                                <select class="validate[required] form-control" name="zid" id="zid" value="{{ridebooks.cid}}">
+                                 
+                                 <option value="">Select User name</option>
+                                 
+                                 {% for z in customers%}
+                                 
+                                 <option value="{{z.id}}" {% if z.id == ridebooks.cid.id %}selected{% endif %}>{{z.cname}}</option>
+                                 {% endfor %}
+                                </select>
+                             </div>
+                            <div class="form-group col-md-6">
+                               <label class="form-label" for="fname">Driver name</label>
+                               <select class="validate[required] form-control" name="cid" id="cid" value="{{ridebooks.did}}">
+                                 
+                                 <option value="">Select Driver name</option>
+                                 
+                                 {% for h in drv%}
+                                 
+                                 <option value="{{h.id}}" {% if h.id == ridebooks.did.id %}selected{% endif %}>{{h.dname}}</option>
+                                 {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="fname">From route:</label>
+                                <input type="text" class="validate[required] form-control" id="froute" name="froute" value="{{ridebooks.froute}}" placeholder="From route">
+                             </div>
+                            
+                            <div class="form-group col-md-6">
+                               <label class="form-label" for="mobno">To route:</label>
+                               <input type="text" class="validate[required] form-control" id="troute" name="troute" value="{{ridebooks.troute}}" placeholder="To route">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="mobno">Total KM:</label>
+                                <textarea name="" id="result" cols="30" rows="1"></textarea>
+                                <input type="text" class="validate[required] form-control" id="tkm" name="tkm" value="{{ridebooks.total_km}}" placeholder="Total KM" onkeyup="sum(this.value);" >
+                             </div>
+
+                             <div class="form-group col-md-6">
+                                <label class="form-label" for="mobno">Per KM Cost:</label>
+                                <input type="text" class="validate[required] form-control" id="pcost" name="pcost" value="{{ridebooks.perkm_cost}}" placeholder="Per KM Cost">
+                             </div>
+
+                             <div class="form-group col-md-6">
+                                <label class="form-label" for="mobno">Total Amount:</label>
+                                <input type="text" class="validate[required,custom[onlyNumber]] form-control" id="out2x" name="tamount" value="{{ridebooks.total_amount}}" placeholder="Total Amount" readonly>
+                             </div>
+
+                             <div class="form-group col-md-6">
+                                <label class="form-label" for="mobno">Booking Date:</label>
+                                <input type="text" class=" form-control" id="bdate" name="bdate" value="{{ridebooks.book_date}}" placeholder="Booking Date" readonly>
+                             </div>
+                             
+                             <div class="form-group col-md-6">
+                                <label class="form-label" for="mobno">Booking Time:</label>
+                                <input type="text" class="validate[required] form-control" id="btime" name="btime" value="{{ridebooks.book_time}}" placeholder="Booking Time">
+                             </div>
+                             <div class="form-group col-md-6">
+                              <label class="form-label" for="mobno">Booking Status:</label>
+                              <select id="bstatus" name="bstatus" class="validate[required] form-control" placeholder="Booking Status">
+                                <option value="Accepted">Accept</option>
+                                <option value="Rejected">Reject</option>
+                                <option value="Completed">Complete</option>
+                                <option value="Completed" selected>{{ridebooks.book_status}}</option>
+                              </select>
+
+                                
+                             </div>
+                         </div>
+                         <br>
+                         <center>
+                         <input type="submit" name="submit" value="Update" class="btn btn-success">
+                        
+                         </center>
+                      </form>
+                      <link href="https://maps-gl.nextbillion.io/maps/api/css" rel="stylesheet" />
+<body class="container">
+  <div class="m-3">
+    
+    
+    <button class="btn btn-success mb-2" onclick="getDistance()">
+    Get Distance</button>
+    
+    <div class="alert alert-success mb-2" id="result"></div>
+    <div class="card" id="map"></div>
+  </div>
+  <script src="https://maps-gl.nextbillion.io/maps/api/js"></script>
+
+</body>
+<style>
+    #map {
+      width: 50%;
+      height: 90vh;
+    }
+    #result{
+      display: none;
+    }
+</style>
+<script>
+   var orgin, destination;
+    var apiKey = "b98e9dd2f9414231bae19340b76feff0";
+    ; (function () {
+      var loc = { lat: 12.95396, lng: 77.4908526 }
+      nextbillion.apiKey = apiKey;
+      var map = new nextbillion.maps.Map(document.getElementById('map'), {
+        zoom: 11,
+        center: loc,
+      })
+      var color = ["green", "red"];
+
+      var count = 0;
+      map.on('click', (event) => {
+        if (count < 2) {
+          const { lng, lat } = event.lngLat;
+          if (count == 0) {
+            orgin = lat + "," + lng;
+          }
+          if (count == 1) {
+            destination = lat + "," + lng;
+          }
+          addMarker({ lat, lng }, map, color[count]);
+          count++;
+
+        }
+      })
+
+
+    })()
+
+    function addMarker(loc, map, color) {
+      return new nextbillion.maps.Marker({
+        position: loc,
+        map: map,
+        icon: color,
+        content: "1",
+      })
+    }
+
+
+    function getDistance() {
+      var resultElement = document.getElementById("result");
+      var url = "https://api.nextbillion.io/distancematrix/json?origins=" + orgin + "&destinations=" + destination + "&mode=4w&key=" + apiKey;
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          data.rows.forEach(function (row) {
+
+            row.elements.forEach(function (element) {
+              resultElement.style.display = "block";
+              resultElement.innerText = "" + ((element.distance.value > 999) ? (element.distance.value / 1000) + "" : element.distance.value + " M") 
+
+            });
+          });
+        });
+    }
+
+    function secondsToHms(d) {
+      d = Number(d);
+      var h = Math.floor(d / 3600);
+      var m = Math.floor(d % 3600 / 60);
+      var s = Math.floor(d % 3600 % 60);
+
+      var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+      var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+      var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+      return hDisplay + mDisplay + sDisplay;
+    }
+
+</script>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+    </div>
+    
+    {% include 'adminz/footer.html'%}
+    {% include 'adminz/val.html' %}
+    
+    

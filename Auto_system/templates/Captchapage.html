@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Autorickshaw</title>
+  <link rel="stylesheet" href="/static/assets/css/style32.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <style>
+	  body {
+	        background-size:cover;
+			background-image:url(/static/assets/img/auto.jpg);
+			}
+	  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <h2><img src="/static/assets/img/myauto.png" height="50px" width="50px" alt=""><b>AUTORICKSHAW BOOKING SYSTEM</b></h2>
+    </div>
+    <br>
+    <h3><b>Welcome to Autorickshaw Booking System website. Please write text as shown in following image to enter into the website.</b></h3>
+    <br>
+    <h4 style="color:red"><b>Captcha*</b></h4>
+
+    <div class="captcha-area">
+      <div class="captcha-img">
+        <img src="/static/assets/img/captcha-bg.png" alt="Captch Background">
+        <span class="captcha"></span>
+      </div>
+      <button class="reload-btn"><i class="fas fa-redo-alt"></i></button>
+    </div>
+    <form action="#" class="input-area">
+      <input type="text" placeholder="Enter Captcha" maxlength="6" spellcheck="false" required>
+      <button class="check-btn">Check</button>
+    </form>
+    <div class="status-text"></div>
+  </div>
+
+  <script src="/static/assets/js/script.js"></script>
+
+</body>
+</html>

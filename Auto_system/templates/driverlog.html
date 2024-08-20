@@ -1,0 +1,260 @@
+<html>
+    <head>
+      <title>Login and Registration</title>
+     <style>
+     
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    
+}
+.wrapper {
+    position: relative;
+    width: 400px;
+    height: 625px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .5);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: transform 0.5s ease,height .2s ease;
+}
+.wrapper.active {
+   height: 600px;
+}
+.wrapper .form-box {
+   width: 100%;
+   padding: 40px;
+}
+.wrapper .form-box.login {
+   transition: transform .18s ease;
+   transform: translateX(0);
+}
+.wrapper.active .form-box.login {
+   transition: none;
+   transform: translateX(-400px);
+}
+.wrapper .form-box.register {
+   position: absolute;
+   transition: none;
+   transform: translateX(400px);
+}
+.wrapper.active .form-box.register {
+   transition: transform .18s ease;
+   transform: translateX(0);
+}
+.wrapper .icon-close {
+   position: absolute;
+   top: 0;
+   right: 0;
+   width: 45px;
+   height: 45px;
+   background: #162938;
+   font-size: 2em;
+   color: #fff;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-bottom-left-radius: 20px;
+   cursor: pointer;
+   z-index: 1;
+}
+.form-box h2 { 
+   font-size: 2em;
+   color: #162938;
+   text-align:center;
+}
+.input-box {
+   position: relative;
+   width: 100%;
+   height: 50px;
+   border-bottom: 2px solid #162938;
+   margin: 30px 0;
+}
+.input-box label {
+   position: absolute;
+   top: 50%;
+   left: 5px;
+   transform: translateY(-50%);
+   font-size: 1em;
+   color: #162938;
+   font-weight: 500;
+   pointer-events: none;
+   transition: .5s;
+}
+.input-box input:focus~label,
+.input-box input:valid~label {
+   top: -5px;
+}
+.input-box input {
+   width: 100%;
+   height: 100%;
+   background: transparent;
+   border: none;
+   outline: none;
+   font-size: 1em;
+   color: #162938;
+   font-weight: 600;
+   padding:  0 35px 0 5px;
+}
+.input-box .icon {
+       position:absolute;
+	   right:8px;
+	   font-size:1.2em;
+	   color:#162938;
+	   line-height:57px;
+}
+.remember-forgot {
+   font-size: .9em;
+   color: #162938;
+   font-weight: 500;
+   margin: -15px 0 15px;
+   display: flex;
+   justify-content: space-between;
+}
+.remember-forgot label input {
+     accent-color: #162938;
+     margin-right: 3px;
+}
+.remember-forgot a {
+   color: #162938;
+   text-decoration: none;
+   
+}
+.remember-forgot a:hover {
+   text-decoration: underline;
+}
+.btn {
+         width: 100%;
+          height: 45px;
+		   background: #162938;
+         border: none;
+         outline: none;
+         border-radius: 6px;
+         cursor: pointer;
+          font-size: 1em;
+          color: #fff;
+          font-weight: 500;
+          
+}
+.login-register {
+   font-size: .9em;
+   color: #162938;
+   text-align: center;
+   font-weight: 500;
+   margin: 25px 0 10px;
+}
+.login-register p a {
+   color: #162938;
+   text-decoration: none;
+   font-weight: 600;
+}
+.login-register p a:hover {
+   text-decoration: underline;
+}
+
+</style>
+<script>
+   {% if messages %}
+   {% for message in messages %}
+     alert('{{message}}')
+    {% endfor %}
+   {% endif %}
+   </script>
+	 </head>
+    
+    <body style="background-color:url()">
+      {% include 'adminz/val.html' %}
+      <div class="wrapper">
+        
+        <div class="form-box login">
+          <h2>Login</h2>
+           <form name="formID" id="formID" action="#" method="post">
+             {% csrf_token %}
+             <div class="input-box">
+               
+               <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                 <input type="email" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="validate[required,custom[email]] form-control" title=" Invalid Email Id Only" required>
+                <label>Enter your email</label>
+             </div>
+
+              <div class="input-box">
+			         <span  class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                 <input type="password" name="pass" class="validate[required] form-control" id="myInput1" required>
+                 <label>Enter your password</label>
+			        </div>
+               
+                 <div class="input-box">
+                  <input type="text" class="validate[required] form-control" name="cen" id="textinput" required>
+                 <label>Enter Captcha</label>
+			        </div>
+                 
+                 <div class="input-box">
+                  <span class="icon"><img src="/static/images/refresh.jpg" width="25px" onclick="cap()"></span>
+                 <input type="text" class="form-control" name="cread" readonly id="capt" required>
+      
+			        </div>
+                 <br>
+                 <br>
+              <div class="remember-forgot">
+                <label><input type="checkbox" onclick="myFunction()">Show Password</label><a href="{% url 'reset_password' %}">Forgot Password?</a>
+              </div>
+             <button type="submit" class="btn">Login</button> 
+             <div class="login-register">
+                <p>Don't have an account? <a href="{% url 'driveregister' %}" class="register-link">Register</a></p>
+             </div>
+				     <div class="login-register">
+                  <p><a href="{% url 'home' %}">Back to Home</a></p>
+              </div>
+           </form>
+        </div>
+      </div>
+      <script type="text/javascript">
+         function cap(){
+           var alpha = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V'
+                        ,'W','X','Y','Z','1','2','3','4','5','6','7','8','9','0','a','b','c','d','e','f','g','h','i',
+                        'j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z', '!','@','#','$','%','^','&','*','+'];
+                        var a = alpha[Math.floor(Math.random()*71)];
+                        var b = alpha[Math.floor(Math.random()*71)];
+                        var c = alpha[Math.floor(Math.random()*71)];
+                        var d = alpha[Math.floor(Math.random()*71)];
+                        var e = alpha[Math.floor(Math.random()*71)];
+                        var f = alpha[Math.floor(Math.random()*71)];
+       
+                        var final = a+b+c+d+e+f;
+                        document.getElementById("capt").value=final;
+                      }
+                      
+       </script>
+       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+      <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+           <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+           <script language="javascript1.2">
+		   
+            function myFunction() {
+       var y = document.getElementById("myInput1");
+     
+     if (y.type === "password") {
+         y.type = "text";
+       } else {
+         y.type = "password";
+       }
+     }
+     </script>
+    </body>
+    </html>

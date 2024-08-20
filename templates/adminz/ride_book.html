@@ -1,0 +1,108 @@
+
+{% include 'adminz/header.html'%}
+{% include 'adminz/slidebar.html'%}
+<div w3-include-html="header.html"></div>
+<div w3-include-html="slidebar.html"></div>
+<div class="conatiner-fluid content-inner mt-n5 py-0">
+    <div>
+       <div class="row">
+          
+          <div class="col-xl-9 col-lg-8">
+             <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                   <div class="header-title">
+                      <h4 class="card-title">Ride Booking Details Form</h4>
+                   </div>
+                </div>
+                <div class="card-body">
+                   <div class="new-user-info">
+                     {% include 'adminz/val.html' %}
+                       <form name="formID" id="formID" action="/adminhome/ridebook_add/" method="POST">
+                        {% csrf_token %}
+                         <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="cid">User name</label>
+                                <select class="validate[required] form-control" name="zid" id="zid">
+                              </div>
+                              {%if request.session.user_session %}
+                            
+                            
+                            
+                            
+                                 
+                                 
+                                 
+                                 
+                                 <option value="{{request.session.userid}}" selected>{{request.session.username}}</option>{%else%}
+                                 Plz Login
+                                 {%endif%}
+                                </select>
+                             </div>
+                            <div class="form-group col-md-6">
+                               <label class="form-label" for="fname">Driver name</label>
+                               <select class="validate[required] form-control" name="cid" id="cid">
+                                 
+                                 
+                                 {%if srv%}
+                                 {% for d in srv %}
+                                 
+                                 <option value="{{d.id}}" selected >{{d.dname}}</option>
+                                 {% endfor %}
+                                 {%endif%}
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="fname">From route:</label>
+                                <input type="text" class="validate[required] form-control" id="froute" name="froute">
+                             </div>
+                            
+                            <div class="form-group col-md-6">
+                               <label class="form-label" for="mobno">To route:</label>
+                               <input type="text" class="validate[required] form-control" id="troute" name="troute">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="mobno">Total KM:</label>
+                                <input type="text"  class="validate[required,custom[onlyNumber]] form-control" id="tkm" name="tkm" value="0" readonly>
+                             </div>
+
+                             <div class="form-group col-md-6">
+                                <label class="form-label" for="mobno">Per KM Cost:</label>
+                                <input type="text" value="23" class="validate[required,custom[onlyNumber]] form-control" id="pcost" name="pcost" readonly>
+                             </div>
+
+                             <div class="form-group col-md-6">
+                                <label class="form-label" for="mobno">Total Amount:</label>
+                                <input type="text" class="validate[required,custom[onlyNumber]] form-control" id="tamount" name="tamount" value="0" readonly>
+                             </div>
+
+                             <div class="form-group col-md-6">
+                                <label class="form-label" for="mobno">Booking Date:</label>
+                                <input type="text" class="form-control" id="bdate" name="bdate" value="{{dd}}">
+                             </div>
+                             
+                             <div class="form-group col-md-6">
+                                <label class="form-label" for="mobno">Booking Time:</label>
+                                <input type="Time" class="validate[required] form-control" id="btime" name="btime" >
+                             </div>
+                             <div class="form-group col-md-6">
+                                <label class="form-label" for="mobno">Booking Status:</label>
+                                <input type="text" class="validate[required,custom[onlyLetter]] form-control" id="bstatus" name="bstatus" value="pending" readonly>
+                             </div>
+                         </div>
+                         <br>
+                         <center>
+                         <input type="submit" name="submit" value="Submit" class="btn btn-success">
+                         <input type="reset" name="reset" value="Reset" class="btn btn-danger">
+                         </center>
+                      </form>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+    </div>
+    {% include 'adminz/footer.html'%}
+    {% include 'adminz/val.html' %}
+    

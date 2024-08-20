@@ -1,0 +1,80 @@
+{% load static %}
+{% include 'adminz/dheader.html'%}
+{% include 'adminz/slidebardriver.html'%}
+<div w3-include-html="header.html"></div>
+<div w3-include-html="slidebar.html"></div>
+<div class="conatiner-fluid content-inner mt-n5 py-0">
+    <div>
+       <div class="row">
+          
+          <div class="col-xl-9 col-lg-8">
+             <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                   <div class="header-title">
+                      <h4 class="card-title">Vehicle Location Details Form</h4>
+                   </div>
+                </div>
+                <div class="card-body">
+                   <div class="new-user-info">
+                     {% include 'adminz/val.html' %}
+                     <form name="formID" id="formID" method="POST" action="/adminhome/vehical_location_add/">
+                        {% csrf_token %}
+                         <div class="row">
+                            
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="cid">Driver name</label>
+                                <select class="validate[required] form-control" name="vid" id="vid">
+                                 
+                                 <option value="">Select Driver name</option>
+                                 
+                                 {% for h in drv%}
+                                 
+                                 <option value="{{h.id}}" selected>{{h.dname}}</option>
+                                 {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label" for="fname">Zip code</label>
+                                <input type="text"  class="validate[required,custom[onlyNumber]] form-control" id="zip" name="zip">
+                             </div>
+                             <div class="form-group col-md-6">
+                              <label class="form-label" for="fname">City</label>
+                              <input type="text"  class="validate[required] form-control" id="cit" name="cit">
+                           </div>
+                            
+                            <div class="form-group col-md-6">
+                               <label class="form-label" for="mobno">Country</label>
+                               <input type="text"  class="validate[required,custom[onlyLetter]] form-control" id="con" name="con">
+                            </div>
+                            <div class="form-group col-md-6">
+                              <label class="form-label" for="mobno">Address</label>
+                              <input type="text"  class="validate[required] form-control" id="addre" name="addre">
+                           </div>
+
+                            <div class="form-group col-md-6">
+                              <label class="form-label" for="mobno">Location</label>
+                              <input type="text"  class="validate[required] form-control" id="lat" name="map_location">
+                           </div>
+
+                            
+
+                            
+
+                         </div>
+                         <br>
+                     
+                         <center>
+                         <input type="submit" name="submit" value="Submit" class="btn btn-success">
+                         <input type="reset" name="reset" value="Reset" class="btn btn-danger">
+                         </center>
+                      </form>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+    </div>
+    {% include 'adminz/footer.html'%}
+    {% include 'adminz/val.html' %}
+    

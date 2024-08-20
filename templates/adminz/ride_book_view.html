@@ -1,0 +1,136 @@
+{% load static %}
+{% include 'adminz/header.html'%}
+{% include 'adminz/slidebar.html'%}
+<script>
+   {% if messages %}
+   {% for message in messages %}
+     alert('{{message}}')
+    {% endfor %}
+   {% endif %}
+   </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<div class="conatiner-fluid content-inner mt-n5 py-0">
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="card">
+            <div class="card-header d-flex justify-content-between">
+               <div class="header-title">
+                  <h4 class="card-title">Rides Booking Details View</h4>
+               </div>
+               
+            </div>
+            {%if request.session.userid %}
+            <div class="card-body">
+               <div class="table-responsive">
+                  <table id="datatable" class="table table-striped" data-toggle="data-table">
+                     <thead>
+                        <tr class="ligth">
+                           <th>#SNO.</th>
+                           <th>Customer Id</th>
+                           <th>Customer name</th>
+                           <th>Driver name</th>
+                           <th>From route</th>
+                           <th>To route</th>
+                           <th>Total KM</th>
+                           <th>Per Km Cost</th>
+                           <th>Total Amount</th>
+                           <th>Booking Date</th>
+                           <th>Booking Time</th>
+                           <th>Booking Status</th>
+                           
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for rb in ridebooks %}
+                        <tr>
+                           <td>{{forloop.counter}}</td>
+                          <td>{{rb.id}}</td>
+                          <td>{{rb.cid}}</td>
+                          <td>{{rb.did}}</td>
+                          <td>{{rb.froute}}</td>
+                          <td>{{rb.troute}}</td>
+                          <td>{{rb.total_km}}</td>
+                          <td>{{rb.perkm_cost}}</td>
+                          <td>{{rb.total_amount}}</td>
+                          <td>{{rb.book_date}}</td>
+                          <td>{{rb.book_time}}</td>
+                          <td>{{rb.book_status}}</td>
+                          
+                             
+        
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                     <tfoot>
+                        <tr>
+                           <th>#SNO.</th>
+                           <th>Customer Id</th>
+                           <th>Customer name</th>
+                           <th>Driver name</th>
+                           <th>From route</th>
+                           <th>To route</th>
+                           <th>Total KM</th>
+                           <th>Per Km Cost</th>
+                           <th>Total Amount</th>
+                           <th>Booking Date</th>
+                           <th>Booking Time</th>
+                           <th>Booking Status</th>
+                           
+                        </tr>
+                       </tfoot>
+                     </table>
+                  </div>
+               </div>
+               {%endif%}
+         </div>
+      </div>
+   </div>
+               </div>
+            
+   
+       {% include 'adminz/footer.html'%}
+       <script type="text/javascript">
+         function confirmation(ev)
+         {
+            ev.preventDefault();
+            var urlToRedirect=ev.currentTarget.getAttribute('href');
+            console.log(urlToRedirect);
+            swal({
+               title:"Are you sure want to delete this?",
+               text:"You won't able to retrive this",
+               icon:"warning",
+               buttons:true,
+               dangerMode:true,
+            })
+            .then((willCancel)=>
+            {
+               if(willCancel)
+               {
+                  window.location.href=urlToRedirect
+               }
+            });
+            
+         }
+         function conform(ev)
+         {
+            ev.preventDefault();
+            var urlToRedirect=ev.currentTarget.getAttribute('href');
+            console.log(urlToRedirect);
+            swal({
+               title:"Are you sure want to Edit this?",
+               
+               icon:"warning",
+               buttons:true,
+               dangerMode:true,
+            })
+            .then((willCancel)=>
+            {
+               if(willCancel)
+               {
+                  window.location.href=urlToRedirect
+               }
+            });
+            
+         }
+         
+       </script>

@@ -1,0 +1,126 @@
+{% load static %}
+{% include 'adminz/header.html'%}
+{% include 'adminz/slidebar.html'%}
+<script>
+   {% if messages %}
+   {% for message in messages %}
+     alert('{{message}}')
+    {% endfor %}
+   {% endif %}
+   </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<div class="conatiner-fluid content-inner mt-n5 py-0">
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="card">
+            <div class="card-header d-flex justify-content-between">
+               <div class="header-title">
+                  <h4 class="card-title">Payment Details View</h4>
+                  
+               </div>
+              
+            </div>
+
+            <div class="card-body">
+               {% if messages %}
+               {% for message in messages %}
+                 <div class="alert alert-{{message.tags}} m-2" id="msg" role="alert">{{message}}</div>
+                {% endfor %}
+             {% endif %}
+         
+               <div class="table-responsive">
+                  <table id="datatable" class="table table-striped" data-toggle="data-table">
+                     <thead>
+                        <tr class="ligth">
+                           <th>#SNO.</th>
+                           <th>Ride Booking Id</th>
+                           <th>Driver Name</th>
+                           <th>Customer Name</th>
+                           <th>Transaction Type</th>
+                           <th>Transaction Amount</th>
+                           <th>Transaction Date</th>
+                          
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for p in pay %}
+                        <tr>
+                          <td>{{p.id}}</td>
+                          <td>{{p.rbook_id.id}}</td>
+                          <td>{{p.did}}</td>
+                          <td>{{p.cid}}</td>
+                          <td>{{p.t_type}}</td>
+                          <td>{{p.t_amount}}</td>
+                          <td>{{p.t_date}}</td>
+                          
+        
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                      <tfoot>
+                         <tr>
+                           <th>#SNO.</th>
+                           <th>Ride Booking Id</th>
+                           <th>Driver Name</th>
+                           <th>Customer Name</th>
+                           <th>Transaction Type</th>
+                           <th>Transaction Amount</th>
+                           <th>Transaction Date</th>
+                           
+                         </tr>
+                        </tfoot>
+                     </table>
+                  </div>
+               </div>
+         </div>
+      </div>
+   </div>
+               </div>
+            
+   
+       {% include 'adminz/footer.html'%}
+       <script type="text/javascript">
+         function confirmation(ev)
+         {
+            ev.preventDefault();
+            var urlToRedirect=ev.currentTarget.getAttribute('href');
+            console.log(urlToRedirect);
+            swal({
+               title:"Are you sure want to delete this?",
+               text:"You won't able to retrive this",
+               icon:"warning",
+               buttons:true,
+               dangerMode:true,
+            })
+            .then((willCancel)=>
+            {
+               if(willCancel)
+               {
+                  window.location.href=urlToRedirect
+               }
+            });
+            
+         }
+         function conform(ev)
+         {
+            ev.preventDefault();
+            var urlToRedirect=ev.currentTarget.getAttribute('href');
+            console.log(urlToRedirect);
+            swal({
+               title:"Are you sure want to Edit this?",
+               
+               icon:"warning",
+               buttons:true,
+               dangerMode:true,
+            })
+            .then((willCancel)=>
+            {
+               if(willCancel)
+               {
+                  window.location.href=urlToRedirect
+               }
+            });
+            
+         }
+         
+       </script>
